@@ -7,8 +7,10 @@ YELLOW='\033[33m'
 GREEN='\033[32m'
 
 # Optional packages
-ZOXIDE=""
-TMUX=""
+ZOXIDE="zoxide"
+TMUX="tmux"
+TRASH_CLI="trash-cli"
+
 # If you execute with sudo, check which user
 if [ "$SUDO_USER" ]; then
     HOME="/home/${SUDO_USER}"
@@ -18,17 +20,16 @@ fi
 
 # Function Definitions
 
-ask_question() {
-    local QUESTION="$1"
-    local VARIABLE="$2"
-    local VALUE_IF_YES="$3"
+ask_install() {
+    local PACKAGE="$1"
+    local QUESTION="Do you want to install $PACKAGE?"
 
     while true; do
         echo -e "${YELLOW}$QUESTION (y/n)${RC}"  # Use -e to enable interpretation of backslash escapes
         read response
         case $response in
-            [yY]* ) eval "$VARIABLE=$VALUE_IF_YES"; break;;
-            [nN]* ) break;;
+            [yY]* ) break;;
+            [nN]* ) eval "${PACKAGE}=''" ; break;;
             * ) echo -e "${RED}Invalid response. Please, type y or n.${RC}";;
         esac
     done
@@ -90,7 +91,7 @@ check_env() {
 
 install_packages() {
     echo -e "${YELLOW}Installing packages...${RC}"
-    local DEPENDENCIES="bash bash-completion ripgrep trash-cli $TMUX $ZOXIDE"
+    local DEPENDENCIES="bash bash-completion ripgrep $TRASH_CLI $TMUX $ZOXIDE"
 
     if [ "$PACKAGE_MANAGER" = "apt" ]; then
         $SUDO_CMD $PACKAGE_MANAGER install -y $DEPENDENCIES
@@ -120,9 +121,6 @@ configure_package() {
 
 # Main script
 
-ask_question "Do you want to install zoxide?" "ZOXIDE" "zoxide"
-ask_question "Do you want to install tmux?" "TMUX" "tmux"
-
 # Create a temporary build directory
 BUILD_DIR=$(mktemp -d)
 
@@ -142,7 +140,18 @@ else
     exit 1
 fi
 
-check_env
-install_packages
-configure_package "$TMUX" "${HOME}/.tmux.conf"
+# UserID 0 is root
+if [ "$EUID" -eq 0 ]; then
+    check_env
+
+    ask_install "ZOXIDE"
+    ask_install "TMUX"
+    ask_install "TRASH_CLI"
+    
+    install_packages
+    configure_package "$TMUX" "${HOME}/.tmux.conf"
+else
+    echo -e "${YELLOW} Running without root privileges, skipping package installation.${RC}"
+fi
+
 configure_package "bash" "${HOME}/.bashrc"
