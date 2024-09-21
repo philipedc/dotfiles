@@ -149,9 +149,11 @@ if [ "$EUID" -eq 0 ]; then
     ask_install "TRASH_CLI"
     
     install_packages
-    configure_package "$TMUX" "${HOME}/.tmux.conf"
 else
     echo -e "${YELLOW} Running without root privileges, skipping package installation.${RC}"
 fi
 
+if command_exists "tmux"; then
+    configure_package "$TMUX" "${HOME}/.tmux.conf"
+fi
 configure_package "bash" "${HOME}/.bashrc"
