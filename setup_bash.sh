@@ -9,6 +9,12 @@ GREEN='\033[32m'
 # Optional packages
 ZOXIDE=""
 TMUX=""
+# If you execute with sudo, check which user
+if [ "$SUDO_USER" ]; then
+    HOME="/home/${SUDO_USER}"
+else
+    HOME="$HOME"
+fi
 
 # Function Definitions
 
