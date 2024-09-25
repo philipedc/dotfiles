@@ -13,9 +13,9 @@ TRASH_CLI="trash-cli"
 
 # If you execute with sudo, check which user
 if [ "$SUDO_USER" ]; then
-    HOME="/home/${SUDO_USER}"
+    TARGET_HOME="/TARGET_HOME/${SUDO_USER}"
 else
-    HOME="$HOME"
+    TARGET_HOME="$TARGET_HOME"
 fi
 
 # Function Definitions
@@ -112,8 +112,14 @@ configure_package() {
 	echo -e "${YELLOW}Configuring package ${PACKAGE_NAME}...${RC}"
 
 	if [ -f "$SYSTEM_CONFIGURATION_PATH" ]; then
-		echo -e "${GREEN}Configuration file already exists. Moving current configuration to trash.${RC}"
-		trash "$SYSTEM_CONFIGURATION_PATH"
+		echo -e "${YELLOW}Configuration file already exists.${RC}"
+		if command_exists "trash"; then
+            echo -e "${YELLOW}Moving old configuration file to trash.${RC}"
+            trash "$SYSTEM_CONFIGURATION_PATH"
+        else
+            echo -e "${YELLOW}Removing old configuration file.${RC}"
+            rm "$SYSTEM_CONFIGURATION_PATH"
+        fi
 	fi
 	echo -e "${GREEN}Creating configuration file: ${SYSTEM_CONFIGURATION_PATH}${RC}"
 	mv "${SCRIPT_CONFIGURATION_PATH}" "$SYSTEM_CONFIGURATION_PATH"
@@ -154,6 +160,6 @@ else
 fi
 
 if command_exists "tmux"; then
-    configure_package "$TMUX" "${HOME}/.tmux.conf"
+    configure_package "$TMUX" "${TARGET_HOME}/.tmux.conf"
 fi
-configure_package "bash" "${HOME}/.bashrc"
+configure_package "bash" "${TARGET_HOME}/.bashrc"
