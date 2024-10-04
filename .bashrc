@@ -27,7 +27,7 @@ if [[ $iatest > 0 ]]; then bind "set bell-style visible"; fi
 # expand history
 export HISTFILESIZE=10000
 export HISTSIZE=500
-export HISTTIMEFORMAT="%F %T" # add timestamp to history
+export HISTTIMEFORMAT="%F %T " # add timestamp to history
 
 # ignore duplicates and commands that start with space
 export HISTCONTROL=erasedups:ignoredups:ignorespace
