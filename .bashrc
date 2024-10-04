@@ -83,7 +83,11 @@ alias alert='for i in {1..3}; do tput bel; sleep 0.5; done'
 # modified commands
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='trash -v'
+if command -v trash &> /dev/null; then
+	alias rm='trash -v'
+else
+	alias rm='rm -i'
+fi
 alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias ping='ping -c 10'
