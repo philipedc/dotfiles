@@ -1,7 +1,10 @@
 # source global definitions
-if [ -f /etc/bashrc ]; then
-	. /etc/bashrc
-fi
+# if [ -f /etc/bashrc ]; then
+# 	. /etc/bashrc
+# fi
+
+export PS1="\[\e[38;5;32m\]\u\[\e[00m\]@\[\e[38;5;24m\]\h \[\e[38;5;196m\]\w \[\e[38;5;220m\]\$(__git_ps1)\[\e[00m\]\$ "
+
 
 if [ -f /usr/bin/fastfetch ]; then
 	fastfetch
