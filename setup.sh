@@ -14,8 +14,8 @@ if [ "$EUID" -eq 0 ]; then
 	for installer in ./installations/*.sh; do source $installer; done
 fi
 
-cp -r ./configs/.bashrc ./configs/bashrc.d/* $DOTFILES_PATH/
+cp -r ./configs/bashrc.d/* $DOTFILES_PATH/
 
-cat $DOTFILES_PATH/.bashrc > $HOME/.bashrc
+cat configs/.bashrc > $HOME/.bashrc
 
 cat ./configs/.gitconfig > $HOME/.gitconfig
