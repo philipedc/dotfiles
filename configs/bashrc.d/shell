@@ -1,0 +1,30 @@
+# source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+if [ -f /usr/bin/fastfetch ]; then
+	fastfetch
+fi
+
+# bash completion features
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+	. /usr/share/bash-completion/bash_completion
+elif [ -f /etc/bash_completion ]; then
+	. /etc/bash_completion
+fi
+
+if command -v zoxide &> /dev/null; then
+	eval "$(zoxide init bash)"
+fi
+
+# Is it needed
+if command -v fzf &> /dev/null; then
+  source /usr/share/bash-completion/completions/fzf
+  source /usr/share/doc/fzf/examples/key-bindings.bash
+fi
+
+if command -v rg &> /dev/null; then
+    # Alias grep to rg if ripgrep is installed
+    alias grep='rg'
+fi
