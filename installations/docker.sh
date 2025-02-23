@@ -1,3 +1,8 @@
+if command -v docker >/dev/null 2>&1; then
+    echo "Docker already installed, skipping..."
+    exit 0
+fi
+
 # Add the official Docker repo
 sudo install -m 0755 -d /etc/apt/keyrings
 sudo wget -qO /etc/apt/keyrings/docker.asc https://download.docker.com/linux/ubuntu/gpg
