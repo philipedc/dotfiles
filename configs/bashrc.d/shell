@@ -21,7 +21,9 @@ if command -v zoxide &> /dev/null; then
 	eval "$(zoxide init bash)"
 fi
 
-# Is it needed
+# use vi-like bindings in bash
+set -o vi
+
 if command -v fzf &> /dev/null; then
   source /usr/share/bash-completion/completions/fzf
   source /usr/share/doc/fzf/examples/key-bindings.bash
