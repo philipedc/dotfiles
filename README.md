@@ -1,25 +1,10 @@
 # Minimal Dotfiles
 
-A lightweight and cohesive Linux setup without the bloat. This repository contains shell configurations, essential aliases, and automated installation scripts for a productive development environment.
-
-## Features
-
-- 🚀 Fast and lightweight setup
-- 🛠️ Essential development tools
-- 🐋 Docker installation and configuration
-- 🔍 Modern CLI tools (ripgrep, fzf, zoxide)
-- 💻 Sensible bash configurations
-- 🎨 Color-enabled terminal setup
+A lightweight and cohesive Linux setup without the bloat. This repository contains shell configurations, essential aliases, and automated installation scripts for a productive development environment. The structure was inspired by Omakub
 
 ## Installation
 
-```bash
-git clone github.com/philipedc/dotfiles
-
-[sudo] ./dotfiles/setup.sh
-```
-
-Execute with sudo to install the recommended packages
+`curl -fsSL https://raw.githubusercontent.com/philipedc/dotfiles/main/setup.sh | bash`
 
 ## Customization
 
