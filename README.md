@@ -4,7 +4,7 @@ A lightweight and cohesive Linux setup without the bloat. This repository contai
 
 ## Installation
 
-`curl -fsSL https://raw.githubusercontent.com/philipedc/dotfiles/main/setup.sh | bash`
+`curl -fsSL https://raw.githubusercontent.com/philipedc/dotfiles/main/setup.sh | sudo bash`
 
 ## Customization
 

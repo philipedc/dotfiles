@@ -1,8 +1,14 @@
 #!/bin/bash -e
 # exit if any command returns non-zero status
 
-export DOTFILES_PATH=$HOME/.local/share/dotfiles
+DOTFILES_REPO_URL="https://github.com/philipedc/dotfiles"
+TMP_DIR="$(mktemp -d)/dotfiles"
 
+git clone "$DOTFILES_REPO_URL" "$TMP_DIR"
+
+cd "$TMP_DIR"
+
+export DOTFILES_PATH=$HOME/.local/share/dotfiles
 mkdir -p $DOTFILES_PATH
 
 # Check if script is running with sudo privileges
@@ -16,6 +22,4 @@ fi
 
 cp -r ./configs/bashrc.d/* $DOTFILES_PATH/
 
-cat configs/.bashrc > $HOME/.bashrc
-
-cat ./configs/.gitconfig > $HOME/.gitconfig
+cat ./configs/.bashrc > $HOME/.bashrc
